@@ -1,10 +1,12 @@
 package com.example.hellospring.service;
 
 import com.example.hellospring.domain.Member;
+import com.example.hellospring.repository.MemberRepository;
 import com.example.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,17 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+//트랜잭션 롤백. 테스트케이스에선 DB 반영 안된다.
 @Transactional
 class MemberServiceIntegrationTest {
 
     //    dependency injection
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore();
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void join() {
@@ -64,12 +62,4 @@ class MemberServiceIntegrationTest {
         //then
     }
 
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
-    }
 }
